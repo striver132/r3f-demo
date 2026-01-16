@@ -2,8 +2,8 @@ export default function ColorControls({
   value,
   onChange,
 }: {
-  value: string
-  onChange: (v: string) => void
+  value: "white" | "blue" | "dark"
+  onChange: (v: "white" | "blue" | "dark") => void
 }) {
   const colors = {
     white: { color1: '#ffffff', color2: '#f0f0f0' },

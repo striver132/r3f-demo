@@ -2,6 +2,7 @@ import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Mesh } from 'three'
 import { useMouseParallax } from '../../hook/useMouseParallax'
+import { useGLTF } from '@react-three/drei'
 
 
 const MATERIALS = {
@@ -28,23 +29,32 @@ export default function HeroObject({
     materialPreset: keyof typeof MATERIALS
 }) {
     const m = MATERIALS[materialPreset]
+    const { scene } = useGLTF('/src/assets/model/abstract_design.glb')
 
-    const ref = useRef<Mesh>(null!)
+    const ref = useRef<any>(null!)
     const getOffset = useMouseParallax(0.4)
+    
     useFrame((state, delta) => {
         const offset = getOffset(0.08)
-        ref.current.position.x = offset.x
-        ref.current.position.y = offset.y
+        if (ref.current) {
+            ref.current.position.x = offset.x
+            ref.current.position.y = offset.y
+        }
     })
 
-    return (
-        <mesh ref={ref}>
-            <sphereGeometry args={[1.2, 64, 64]} />
-            <meshStandardMaterial
-                color={m.color}
-                metalness={m.metalness}
-                roughness={m.roughness}
-            />
-        </mesh>
-    )
+    // 克隆场景并应用材质
+    const clonedScene = scene.clone()
+    clonedScene.traverse((child: any) => {
+        if (child.isMesh) {
+            child.material = child.material.clone()
+            child.material.color.set(m.color)
+            child.material.metalness = m.metalness
+            child.material.roughness = m.roughness
+        }
+    })
+
+    return <primitive ref={ref} object={clonedScene} scale={0.01} />
 }
+
+// 预加载模型
+useGLTF.preload('/src/assets/model/abstract_design.glb')

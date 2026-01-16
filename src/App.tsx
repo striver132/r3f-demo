@@ -2,20 +2,53 @@ import HeroCanvas from './components/hero/HeroCanvas'
 import HeroScene from './components/hero/HeroScene'
 import HeroOverlay from './ui/HeroOverlay'
 import ColorControls from './ui/ColorControls'
-import { useState } from 'react'
-export default function App() {
-  const [materialPreset, setMaterialPreset] = useState('white')
-  return (
-    <div className="hero">
-      <HeroCanvas>
-        <HeroScene materialPreset={materialPreset} />
-      </HeroCanvas>
-      <HeroOverlay />
+import CenterContent from './components/center/CenterContent'
 
-      <ColorControls
-        value={materialPreset}
-        onChange={setMaterialPreset}
-      />
-    </div>
+// post-test
+import TestCanvas from './components/post-test/TestCanvas'
+import TestScene from './components/post-test/TestScene'
+import { OrbitControls } from "@react-three/drei"
+import { EffectComposer, SSAO, Bloom,ASCII } from "@react-three/postprocessing";
+import { useState, Suspense } from 'react'
+
+export default function App() {
+  // const [materialPreset, setMaterialPreset] = useState<"white" | "blue" | "dark">('white')
+  return (
+    <>
+      {/* <div className="hero">
+        <HeroCanvas>
+          <HeroScene materialPreset={materialPreset} />
+        </HeroCanvas>
+        <HeroOverlay />
+
+        <ColorControls
+          value={materialPreset}
+          onChange={setMaterialPreset}
+        />
+
+      </div>
+      <div className='center'>
+        <CenterContent />
+      </div> */}
+
+      <TestCanvas>
+        <Suspense fallback={null}>
+          <TestScene />
+        </Suspense>
+        <OrbitControls />
+        <Suspense>
+          <EffectComposer>
+            
+            <ASCII />
+            <SSAO 
+              intensity={30}
+              radius={5}
+              bias={0.1}
+            />
+          </EffectComposer>
+        </Suspense>
+      </TestCanvas>
+    </>
+
   )
 }
