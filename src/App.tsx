@@ -11,6 +11,10 @@ import { OrbitControls } from "@react-three/drei"
 import { EffectComposer, SSAO, Bloom,ASCII } from "@react-three/postprocessing";
 import { useState, Suspense } from 'react'
 
+
+//Shader Study
+import ShaderCanvas from './components/shader-study/ShaderCanvas'
+import ShaderScene from './components/shader-study/ShaderScene'
 export default function App() {
   // const [materialPreset, setMaterialPreset] = useState<"white" | "blue" | "dark">('white')
   return (
@@ -31,7 +35,7 @@ export default function App() {
         <CenterContent />
       </div> */}
 
-      <TestCanvas>
+      {/* <TestCanvas>
         <Suspense fallback={null}>
           <TestScene />
         </Suspense>
@@ -47,7 +51,14 @@ export default function App() {
             />
           </EffectComposer>
         </Suspense>
-      </TestCanvas>
+      </TestCanvas> */}
+
+      {/* Shader Study */}
+      <ShaderCanvas>
+        <Suspense fallback={null}>
+          <ShaderScene />
+        </Suspense>
+      </ShaderCanvas>
     </>
 
   )
