@@ -15,6 +15,10 @@ import { useState, Suspense } from 'react'
 //Shader Study
 import ShaderCanvas from './components/shader-study/ShaderCanvas'
 import ShaderScene from './components/shader-study/ShaderScene'
+
+// BS
+import BS from './BS'
+import IK from './IK'
 export default function App() {
   // const [materialPreset, setMaterialPreset] = useState<"white" | "blue" | "dark">('white')
   return (
@@ -54,11 +58,14 @@ export default function App() {
       </TestCanvas> */}
 
       {/* Shader Study */}
-      <ShaderCanvas>
+      {/* <ShaderCanvas>
         <Suspense fallback={null}>
           <ShaderScene />
         </Suspense>
-      </ShaderCanvas>
+      </ShaderCanvas> */}
+
+      {/* <BS></BS> */}
+      <IK></IK>
     </>
 
   )
